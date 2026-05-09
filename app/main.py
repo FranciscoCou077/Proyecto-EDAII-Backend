@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app.api import graphs # Importa los endpoints
 
 # Inicializamos la aplicación de FastAPI
 app = FastAPI(
@@ -17,3 +18,5 @@ def read_root():
         "mensaje": "Bienvenido al motor Backend de EDA II",
         "equipo": "Backend"
     }
+# Connectar rutas de grafos
+app.include_router(graphs.router)
