@@ -34,10 +34,14 @@ La arquitectura, programación de algoritmos y mantenimiento de esta API está a
 
 * **Francisco José Coutiño Morales** - Lead Backend Developer ([GitHub](https://github.com/FranciscoCou077))
 * **Ernesto Flamenco Villaseñor** - Backend Developer ([GitHub](https://github.com/))
-* *[Nombre del Desarrollador 4]* - Backend Developer ([GitHub](https://github.com/))
-* *[Nombre del Desarrollador 4]* - Backend Developer ([GitHub](https://github.com/))
-* *[Nombre del Desarrollador 5]* - Backend Developer ([GitHub](https://github.com/))
-* *[Nombre del Desarrollador 6]* - Backend Developer ([GitHub](https://github.com/))
+* **Tlalli Ortega González** - Backend Developer ([GitHub](https://github.com/tlalliortega ))
+* **Sergio Alonso Salcedo Sainz** - Backend Developer ([GitHub](https://github.com/alosalcedo ))
+* **Orlando Ocampo Lagunas** - Backend Developer ([GitHub](https://github.com/Lando-lang))
+* **Aarón Salazar Castillo** - Backend Developer ([GitHub](https://github.com/aaronSalazar05 ))
+* **Erick Cruz Solis** - Backend Developer ([GitHub](https://github.com/ErickCruzS))
+* **Augusto Gandarilla Ibarra** - Backend Developer ([GitHub](https://github.com/agustogan-a11y))
+* **Neri Israel Cruz Cárdenas** - Backend Developer ([GitHub](https://github.com/NeriIsrael))
+
 
 ---
 *Desarrollado con rigor, lógica y código limpio.*
