@@ -1,5 +1,5 @@
 from fastapi import APIRouter 
-from app.algoritmos.grafos import bfs, dfs, representacion
+from app.algoritmos._3_grafos import bfs, dfs, representacion
 
 router = APIRouter()
 
