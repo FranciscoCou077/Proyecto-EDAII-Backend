@@ -1,0 +1,104 @@
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class ChatHistory(Base):
+    __tablename__ = 'chat_history'
+    id = Column(Integer, primary_key=True)
+    session_id = Column(String(100), nullable=False)
+    message = Column(Text, nullable=False)
+    sender = Column(String(50)) # 'user' o 'bot'
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class AlgorithmExecution(Base):
+    __tablename__ = 'algorithm_executions'
+    id = Column(Integer, primary_key=True)
+    algorithm_name = Column(String(100))
+    execution_date = Column(DateTime, default=datetime.utcnow)
+    status = Column(String(50)) # 'success' o 'failed'
+---
+###
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+DATABASE_URL = "sqlite:///./edaii.db"
+
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+###
+---
+
+from sqlalchemy import Column, Integer, String, Text, DateTime
+from datetime import datetime
+from .database import Base
+
+class ChatHistorial(Base):
+    __tablename__ = "historial_chatbot"
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(String(100), nullable=False)
+    rol = Column(String(20)) # 'user' o 'assistant'
+    contenido = Column(Text, nullable=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class EjecucionAlgoritmo(Base):
+    __tablename__ = "ejecuciones_algoritmos"
+    id = Column(Integer, primary_key=True, index=True)
+    nombre_algoritmo = Column(String(100))
+    parametros = Column(Text)
+    resultado = Column(Text)
+    fecha_ejecucion = Column(DateTime, default=datetime.utcnow)
+
+---
+
+from fastapi import APIRouter, UploadFile, File, Depends
+import os
+
+router = APIRouter(prefix="/api/files")
+UPLOAD_DIR = "uploads"
+
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR)
+
+@router.post("/create")
+async def create_file(file: UploadFile = File(...)):
+    file_path = os.path.join(UPLOAD_DIR, file.filename)
+    with open(file_path, "wb") as buffer:
+        buffer.write(await file.read())
+    return {"message": "Archivo guardado", "filename": file.filename}
+
+@router.get("/info")
+async def get_info(filename: str):
+    file_path = os.path.join(UPLOAD_DIR, filename)
+    if os.path.exists(file_path):
+        stats = os.stat(file_path)
+        return {
+            "nombre": filename,
+            "tamaño_bytes": stats.st_size,
+            "creacion": stats.st_ctime
+        }
+    return {"error": "Archivo no encontrado"}
+
+---
+from database import engine, Base
+import models  
+
+def inicializar_base_de_datos():
+    print("Conectando con la base de datos...")
+    
+    Base.metadata.create_all(bind=engine)
+    
+    print("¡Tablas creadas con éxito!")
+    print("Tablas detectadas:", Base.metadata.tables.keys())
+
+if __name__ == "__main__":
+    inicializar_base_de_datos()
