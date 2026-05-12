@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import graphs, sorting
+from app.api import graphs, sorting, searching
 
 app = FastAPI(
     title="API Backend - Estructura de Datos y Algoritmos II",
@@ -26,3 +26,4 @@ def read_root():
 
 app.include_router(sorting.router, prefix="/api/sorting", tags=["Ordenamiento"])
 app.include_router(graphs.router,  prefix="/api/graphs",  tags=["Grafos"])
+app.include_router(searching.router, prefix="/api/searching", tags=["Busqueda"])
