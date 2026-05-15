@@ -30,6 +30,8 @@ def read_root():
     }
 
 app.include_router(sorting.router, prefix="/api/sorting", tags=["Ordenamiento"])
+app.include_router(graphs.router,  prefix="/api/graphs",  tags=["Grafos"])
+app.include_router(searching.router, prefix="/api/searching", tags=["Busqueda"])
 app.include_router(sorting_part1_router, prefix="/api/sorting", tags=["Ordenamiento"])
 app.include_router(graphs.router, prefix="/api/graphs", tags=["Grafos"])
-app.include_router(searching.router, prefix="/api/searching", tags=["Búsqueda"])
+
