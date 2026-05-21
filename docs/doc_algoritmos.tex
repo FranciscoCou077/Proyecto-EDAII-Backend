@@ -1,0 +1,356 @@
+\documentclass[12pt]{article}
+
+% -------------------------------------------------
+% PAQUETES BÁSICOS
+% -------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{setspace}
+
+% -------------------------------------------------
+% CONFIGURACIÓN DE PÁGINA
+% -------------------------------------------------
+\geometry{
+	letterpaper,
+	margin=2.5cm
+}
+
+\setstretch{1.15}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue,
+	citecolor=black
+}
+
+% -------------------------------------------------
+% FORMATO DE TÍTULOS
+% -------------------------------------------------
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection.}{0.5em}{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection.}{0.5em}{}
+
+% -------------------------------------------------
+% CONFIGURACIÓN PARA CÓDIGO FUENTE
+% -------------------------------------------------
+\definecolor{codegray}{gray}{0.95}
+\definecolor{codeborder}{gray}{0.75}
+
+\lstdefinestyle{pythonstyle}{
+	backgroundcolor=\color{codegray},
+	frame=single,
+	rulecolor=\color{codeborder},
+	basicstyle=\ttfamily\small,
+	keywordstyle=\bfseries\color{blue},
+	commentstyle=\itshape\color{gray},
+	stringstyle=\color{teal},
+	breaklines=true,
+	showstringspaces=false,
+	tabsize=4,
+	language=Python
+}
+
+\lstset{style=pythonstyle}
+
+% -------------------------------------------------
+% DATOS DEL DOCUMENTO
+% -------------------------------------------------
+\title{
+	\textbf{Documentación Técnica del Módulo de Algoritmos}\\
+	\large Backend del Sistema
+}
+
+\author{
+	Equipo de Desarrollo
+}
+
+\date{\today}
+
+% -------------------------------------------------
+% INICIO DEL DOCUMENTO
+% -------------------------------------------------
+\begin{document}
+	
+	% -------------------------------------------------
+	% PORTADA
+	% -------------------------------------------------
+	\begin{titlepage}
+		\centering
+		\begin{minipage}{0.2\textwidth}
+			\centering
+			\includegraphics[width=3cm]{logo_unam.png}
+		\end{minipage}
+		\hfill
+		\begin{minipage}{0.2\textwidth}
+			\centering
+			\includegraphics[width=3cm]{logo_fi.png}
+		\end{minipage}
+		
+		\vspace{1cm}
+		
+		{\Large Universidad Nacional Autónoma de México\par}
+		\vspace{0.3cm}
+		{\large Facultad de Ingeniería\par}
+		
+		\vspace{1.5cm}
+		
+		{\large Asignatura:\par}
+		{\textbf{Estructura de Datos y Algoritmos II}\par}
+		
+		\vspace{1.2cm}
+		
+		{\large Proyecto final:\par}
+		{\textbf{Software para la visualización y estudio de algoritmos y estructuras de datos -Backend-}\par}
+		
+		\vspace{1.2cm}
+		
+		{\Huge \textbf{Documentación Técnica del Módulo de Algoritmos}\par}
+		
+		\vspace{0.5cm}
+		
+		{\Large Análisis, Diseño e Implementación de Algoritmos en el Backend\par}
+		
+		\vspace{1.2cm}
+		
+		{\large Carpeta documentada:\par}
+		{\texttt{app/algoritmos/}\par}
+		
+		\vspace{1.2cm}
+		
+		{\large Equipo de Desarrollo de Backend\par}
+		\vspace{0.3cm}
+		
+		{\large \today\par}
+		
+	\end{titlepage}
+	
+	% -------------------------------------------------
+	% DOCUMENTACIÓN SINTETIZADA DEL MÓDULO ALGORITMOS
+	% -------------------------------------------------
+	
+	\section{Módulo de Algoritmos}
+	
+	La carpeta \texttt{algoritmos} contiene las implementaciones principales de estructuras de datos, algoritmos de búsqueda, ordenamiento, grafos, manejo de archivos y procesamiento paralelo. Su función dentro del sistema es concentrar la lógica computacional que posteriormente puede ser utilizada por la API y representada visualmente en el front-end.
+	
+	Este módulo no está diseñado para mostrarse directamente al usuario final, sino para proporcionar las operaciones que serán consumidas desde la interfaz. Por ello, la documentación se enfoca en describir brevemente qué hace cada archivo y cómo podría representarse en la parte visual del sistema.
+	
+	% -------------------------------------------------
+	\subsection{Carpeta \texttt{arboles}}
+	
+	La carpeta \texttt{arboles} contiene algoritmos relacionados con estructuras jerárquicas y conversión de expresiones matemáticas. Incluye árboles binarios, árboles B, árboles B+ y conversión entre notaciones infija, prefija y sufija.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{binary\_tree.py} & Implementa un árbol binario de búsqueda con inserción, búsqueda, eliminación y recorridos. & Permite visualizar un árbol, mostrar recorridos como inorden, preorden, postorden y nivel-orden. \\
+			\hline
+			\texttt{btree.py} & Implementa un Árbol B de orden 3, útil para almacenar claves en nodos con varios hijos. & Puede mostrarse como una estructura por niveles, representando cada nodo como una caja con claves. \\
+			\hline
+			\texttt{bplustree.py} & Implementa un Árbol B+ donde los datos se almacenan en hojas enlazadas. & Puede visualizarse mostrando hojas conectadas y valores ordenados secuencialmente. \\
+			\hline
+			\texttt{notation.py} & Convierte expresiones infijas a notación sufija o prefija. & Puede usarse en una vista donde el usuario escriba una expresión y vea la conversión. \\
+			\hline
+			\texttt{router.py} & Expone endpoints para trabajar con árboles y notaciones. & Permite que el front-end mande datos y reciba resultados en formato JSON. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen de archivos de la carpeta arboles}
+	\end{table}
+	
+	En la interfaz, esta sección puede funcionar como un visualizador de árboles. El usuario ingresaría valores, seleccionaría el tipo de árbol u operación, y el sistema mostraría el resultado mediante recorridos, estructuras por niveles o conversiones de expresiones.
+	
+	% -------------------------------------------------
+	\subsection{Carpeta \texttt{archivos}}
+	
+	La carpeta \texttt{archivos} contiene funciones para guardar archivos en el backend y consultar información básica de ellos.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{organizacion.py} & Crea y administra la carpeta donde se guardan los archivos subidos. & Permite que los archivos cargados desde la interfaz tengan una ubicación definida en el backend. \\
+			\hline
+			\texttt{operaciones.py} & Guarda archivos recibidos y obtiene información como nombre, tamaño y fecha de creación. & Puede usarse para mostrar una tabla o tarjeta con los datos del archivo subido. \\
+			\hline
+			\texttt{\_\_init\_\_.py} & Exporta las funciones principales del módulo. & Facilita que otros módulos del backend usen estas funciones. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen de archivos de la carpeta archivos}
+	\end{table}
+	
+	En el front-end, esta parte puede representarse con un formulario de carga de archivos. El usuario selecciona un archivo, lo sube al sistema y posteriormente se muestran sus datos principales.
+	
+	% -------------------------------------------------
+	\subsection{Carpeta \texttt{busqueda}}
+	
+	La carpeta \texttt{busqueda} contiene algoritmos para localizar un valor dentro de un arreglo.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{busqueda\_lineal.py} & Recorre el arreglo elemento por elemento hasta encontrar el valor objetivo. & Puede mostrarse como una búsqueda paso a paso resaltando cada comparación. \\
+			\hline
+			\texttt{busqueda\_binaria.py} & Busca un valor dividiendo el arreglo ordenado en mitades. & Puede visualizarse reduciendo el rango de búsqueda en cada paso. \\
+			\hline
+			\texttt{hash.py} & Usa una tabla hash para buscar valores de forma eficiente. & Puede mostrarse como una tabla clave-valor indicando si el elemento fue encontrado. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen de archivos de la carpeta busqueda}
+	\end{table}
+	
+	En la interfaz, el usuario podría ingresar un arreglo, seleccionar un algoritmo de búsqueda y escribir el valor a buscar. El sistema mostraría si el valor fue encontrado, su índice, número de comparaciones o colisiones y complejidad aproximada.
+	
+	% -------------------------------------------------
+	\subsection{Carpeta \texttt{grafos}}
+	
+	La carpeta \texttt{grafos} contiene funciones para representar grafos y recorrerlos mediante BFS y DFS.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{representacion.py} & Genera matriz y lista de adyacencia a partir de nodos y aristas. & Permite mostrar el grafo como tabla, matriz o diagrama visual. \\
+			\hline
+			\texttt{bfs.py} & Implementa búsqueda en anchura usando una cola. & Puede visualizarse recorriendo el grafo por niveles. \\
+			\hline
+			\texttt{dfs.py} & Implementa búsqueda en profundidad usando recursividad. & Puede visualizarse siguiendo un camino profundo antes de retroceder. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen de archivos de la carpeta grafos}
+	\end{table}
+	
+	En el front-end, esta sección puede permitir al usuario crear un grafo ingresando nodos y aristas. Después, podrá seleccionar BFS o DFS y observar el orden en que se visitan los nodos.
+	
+% -------------------------------------------------
+\subsection{Carpeta \texttt{ordenamiento}}
+
+La carpeta \texttt{ordenamiento} contiene algoritmos para ordenar arreglos numéricos. Algunos de estos algoritmos registran pasos intermedios, lo cual permite crear animaciones o visualizaciones didácticas en el front-end.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+		\hline
+		\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+		\hline
+		\texttt{sorting\_algorithms.py} & Implementa Bubble Sort, Heap Sort y Quick Sort con pasos intermedios. & Permite animar comparaciones, intercambios, pivotes y estados del arreglo durante el ordenamiento. \\
+		\hline
+		\texttt{sorting\_router.py} & Expone endpoints para ejecutar Bubble Sort, Heap Sort y Quick Sort mediante FastAPI. Recibe un arreglo de enteros y devuelve el resultado generado por cada algoritmo. & Permite que el front-end mande un arreglo al backend y reciba la información necesaria para mostrar el ordenamiento visualmente. \\
+		\hline
+		\texttt{sorting\_schemas.py} & Define modelos de entrada y salida para estructurar los datos de ordenamiento. & Ayuda a estandarizar la información que el front-end envía y recibe. \\
+		\hline
+		\texttt{counting\_sort.py} & Ordena enteros contando ocurrencias dentro de un rango. & Puede mostrarse con una tabla de frecuencias y el arreglo final ordenado. \\
+		\hline
+		\texttt{merge\_sort.py} & Ordena dividiendo el arreglo en mitades y mezclándolas ordenadamente. & Puede visualizarse como división y combinación de subarreglos. \\
+		\hline
+		\texttt{radix\_sort.py} & Ordena números procesando sus dígitos de menor a mayor posición. & Puede mostrarse indicando el dígito usado en cada etapa del ordenamiento. \\
+		\hline
+	\end{tabular}
+	\caption{Resumen de archivos de la carpeta ordenamiento}
+\end{table}
+
+En el front-end, esta parte puede funcionar como un visualizador de algoritmos de ordenamiento. El usuario ingresa un arreglo, selecciona el algoritmo y observa el proceso mediante barras, listas o tablas de pasos.
+
+Los endpoints principales expuestos para esta sección son:
+
+\begin{itemize}
+	\item \texttt{/bubble-sort}: ejecuta Bubble Sort.
+	\item \texttt{/heap-sort}: ejecuta Heap Sort.
+	\item \texttt{/quick-sort}: ejecuta Quick Sort.
+\end{itemize}
+
+Estos endpoints reciben una estructura con el siguiente formato:
+
+\begin{verbatim}
+	{
+		"arreglo": [64, 34, 25, 12, 22, 11, 90]
+	}
+\end{verbatim}
+
+La respuesta puede utilizarse para mostrar el arreglo ordenado, el número de pasos realizados y los estados intermedios del proceso, dependiendo del algoritmo seleccionado.
+	
+	% -------------------------------------------------
+	\subsection{Carpeta \texttt{paralelos}}
+	
+	La carpeta \texttt{paralelos} contiene funciones relacionadas con procesamiento paralelo, comparación de rendimiento y teoría de paralelismo.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{paralelos.py} & Implementa búsqueda de primos secuencial y paralela, cálculos por rango, comparación de rendimiento y datos teóricos sobre paralelismo. & Puede mostrarse como una sección de pruebas de rendimiento con tiempos, speedup, eficiencia y número de procesos. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen de archivos de la carpeta paralelos}
+	\end{table}
+	
+	En el front-end, este módulo puede representarse con formularios para ejecutar cálculos secuenciales o paralelos. También puede incluir gráficas comparativas de tiempo, speedup y eficiencia.
+	
+	% -------------------------------------------------
+	\section{Integración General con Front-End}
+	
+	La integración visual del módulo \texttt{algoritmos} se basa en permitir que el usuario interactúe con cada algoritmo mediante formularios y componentes gráficos. El front-end no debe implementar directamente la lógica interna de los algoritmos, sino enviar los datos al backend y mostrar los resultados recibidos.
+	
+	De forma general, el flujo sería:
+	
+	\begin{enumerate}
+		\item El usuario ingresa datos desde la interfaz.
+		\item El front-end valida la información básica.
+		\item Se envía una petición al backend.
+		\item El backend ejecuta el algoritmo correspondiente.
+		\item El resultado se devuelve en formato JSON.
+		\item El front-end muestra el resultado de forma visual.
+	\end{enumerate}
+	
+	Cada módulo puede tener una representación visual diferente:
+	
+	\begin{itemize}
+		\item \textbf{Árboles}: nodos conectados, recorridos y niveles.
+		\item \textbf{Archivos}: carga de archivos y tarjetas con metadatos.
+		\item \textbf{Búsqueda}: arreglo con elementos resaltados durante la búsqueda.
+		\item \textbf{Grafos}: nodos, aristas y recorridos BFS/DFS.
+		\item \textbf{Ordenamiento}: barras animadas, comparaciones e intercambios.
+		\item \textbf{Paralelos}: gráficas de tiempo, speedup y eficiencia.
+	\end{itemize}
+	
+	Esta integración permite que la documentación no solo explique el código, sino que también sirva como guía para que el equipo de front-end implemente las vistas correspondientes.
+	
+	% -------------------------------------------------
+	\section{Conclusión}
+	
+	La carpeta \texttt{algoritmos} concentra la lógica principal del sistema relacionada con estructuras de datos y técnicas algorítmicas. Aunque cada submódulo resuelve un problema diferente, todos comparten el mismo propósito: proporcionar operaciones que puedan ser consumidas por el backend y representadas visualmente desde el front-end.
+	
+	Esta documentación sintetizada permite identificar rápidamente qué contiene cada archivo, cuál es su función principal y cómo puede utilizarse dentro de la interfaz del sistema.
+	
+\end{document}
