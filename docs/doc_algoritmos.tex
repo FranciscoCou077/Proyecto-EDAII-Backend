@@ -251,34 +251,52 @@
 	
 	En el front-end, esta sección puede permitir al usuario crear un grafo ingresando nodos y aristas. Después, podrá seleccionar BFS o DFS y observar el orden en que se visitan los nodos.
 	
-	% -------------------------------------------------
-	\subsection{Carpeta \texttt{ordenamiento}}
-	
-	La carpeta \texttt{ordenamiento} contiene algoritmos para ordenar arreglos numéricos. Algunos de ellos registran pasos intermedios, lo cual permite crear animaciones o visualizaciones didácticas.
-	
-	\begin{table}[H]
-		\centering
-		\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
-			\hline
-			\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
-			\hline
-			\texttt{sorting\_algorithms.py} & Implementa Bubble Sort, Heap Sort y Quick Sort con pasos intermedios. & Permite animar comparaciones, intercambios y pivotes. \\
-			\hline
-			\texttt{sorting\_schemas.py} & Define modelos de entrada y salida para los algoritmos de ordenamiento. & Ayuda a estructurar los datos que el front-end envía y recibe. \\
-			\hline
-			\texttt{sorting\_router.py} & Expone endpoints para algunos algoritmos de ordenamiento. & Permite ejecutar ordenamientos desde la interfaz. \\
-			\hline
-			\texttt{counting\_sort.py} & Ordena enteros contando ocurrencias dentro de un rango. & Puede mostrarse con una tabla de frecuencias. \\
-			\hline
-			\texttt{merge\_sort.py} & Ordena dividiendo el arreglo en mitades y mezclándolas ordenadamente. & Puede visualizarse como división y combinación de subarreglos. \\
-			\hline
-			\texttt{radix\_sort.py} & Ordena números procesando sus dígitos de menor a mayor posición. & Puede mostrarse indicando el dígito usado en cada etapa. \\
-			\hline
-		\end{tabular}
-		\caption{Resumen de archivos de la carpeta ordenamiento}
-	\end{table}
-	
-	En el front-end, esta parte puede funcionar como un visualizador de algoritmos de ordenamiento. El usuario ingresa un arreglo, selecciona el algoritmo y observa el proceso mediante barras, listas o tablas de pasos.
+% -------------------------------------------------
+\subsection{Carpeta \texttt{ordenamiento}}
+
+La carpeta \texttt{ordenamiento} contiene algoritmos para ordenar arreglos numéricos. Algunos de estos algoritmos registran pasos intermedios, lo cual permite crear animaciones o visualizaciones didácticas en el front-end.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+		\hline
+		\textbf{Archivo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+		\hline
+		\texttt{sorting\_algorithms.py} & Implementa Bubble Sort, Heap Sort y Quick Sort con pasos intermedios. & Permite animar comparaciones, intercambios, pivotes y estados del arreglo durante el ordenamiento. \\
+		\hline
+		\texttt{sorting\_router.py} & Expone endpoints para ejecutar Bubble Sort, Heap Sort y Quick Sort mediante FastAPI. Recibe un arreglo de enteros y devuelve el resultado generado por cada algoritmo. & Permite que el front-end mande un arreglo al backend y reciba la información necesaria para mostrar el ordenamiento visualmente. \\
+		\hline
+		\texttt{sorting\_schemas.py} & Define modelos de entrada y salida para estructurar los datos de ordenamiento. & Ayuda a estandarizar la información que el front-end envía y recibe. \\
+		\hline
+		\texttt{counting\_sort.py} & Ordena enteros contando ocurrencias dentro de un rango. & Puede mostrarse con una tabla de frecuencias y el arreglo final ordenado. \\
+		\hline
+		\texttt{merge\_sort.py} & Ordena dividiendo el arreglo en mitades y mezclándolas ordenadamente. & Puede visualizarse como división y combinación de subarreglos. \\
+		\hline
+		\texttt{radix\_sort.py} & Ordena números procesando sus dígitos de menor a mayor posición. & Puede mostrarse indicando el dígito usado en cada etapa del ordenamiento. \\
+		\hline
+	\end{tabular}
+	\caption{Resumen de archivos de la carpeta ordenamiento}
+\end{table}
+
+En el front-end, esta parte puede funcionar como un visualizador de algoritmos de ordenamiento. El usuario ingresa un arreglo, selecciona el algoritmo y observa el proceso mediante barras, listas o tablas de pasos.
+
+Los endpoints principales expuestos para esta sección son:
+
+\begin{itemize}
+	\item \texttt{/bubble-sort}: ejecuta Bubble Sort.
+	\item \texttt{/heap-sort}: ejecuta Heap Sort.
+	\item \texttt{/quick-sort}: ejecuta Quick Sort.
+\end{itemize}
+
+Estos endpoints reciben una estructura con el siguiente formato:
+
+\begin{verbatim}
+	{
+		"arreglo": [64, 34, 25, 12, 22, 11, 90]
+	}
+\end{verbatim}
+
+La respuesta puede utilizarse para mostrar el arreglo ordenado, el número de pasos realizados y los estados intermedios del proceso, dependiendo del algoritmo seleccionado.
 	
 	% -------------------------------------------------
 	\subsection{Carpeta \texttt{paralelos}}
