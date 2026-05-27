@@ -1,0 +1,282 @@
+% !TeX program = xelatex
+\documentclass[12pt]{article}
+
+% -------------------------------------------------
+% PAQUETES BÁSICOS
+% -------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{setspace}
+
+% -------------------------------------------------
+% CONFIGURACIÓN DE PÁGINA
+% -------------------------------------------------
+\geometry{
+	letterpaper,
+	margin=2.5cm
+}
+
+\setstretch{1.15}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue,
+	citecolor=black
+}
+
+% -------------------------------------------------
+% FORMATO DE TÍTULOS
+% -------------------------------------------------
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection.}{0.5em}{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection.}{0.5em}{}
+
+% -------------------------------------------------
+% CONFIGURACIÓN PARA CÓDIGO FUENTE
+% -------------------------------------------------
+\definecolor{codegray}{gray}{0.95}
+\definecolor{codeborder}{gray}{0.75}
+
+\lstdefinestyle{pythonstyle}{
+	backgroundcolor=\color{codegray},
+	frame=single,
+	rulecolor=\color{codeborder},
+	basicstyle=\ttfamily\small,
+	keywordstyle=\bfseries\color{blue},
+	commentstyle=\itshape\color{gray},
+	stringstyle=\color{teal},
+	breaklines=true,
+	showstringspaces=false,
+	tabsize=4,
+	language=Python
+}
+
+\lstset{style=pythonstyle}
+
+% -------------------------------------------------
+% DATOS DEL DOCUMENTO
+% -------------------------------------------------
+\title{
+	\textbf{Documentación Técnica del Módulo API}\\
+	\large Backend del Sistema
+}
+
+\author{
+	Equipo de Desarrollo
+}
+
+\date{\today}
+
+% -------------------------------------------------
+% INICIO DEL DOCUMENTO
+% -------------------------------------------------
+\begin{document}
+	
+	% -------------------------------------------------
+	% PORTADA
+	% -------------------------------------------------
+	\begin{titlepage}
+		\centering
+		
+		\begin{minipage}{0.2\textwidth}
+			\centering
+			\includegraphics[width=3cm]{logo_unam.png}
+		\end{minipage}
+		\hfill
+		\begin{minipage}{0.2\textwidth}
+			\centering
+			\includegraphics[width=3cm]{logo_fi.png}
+		\end{minipage}
+		\vspace{1cm}
+		
+		{\Large Universidad Nacional Autónoma de México\par}
+		\vspace{0.3cm}
+		{\large Facultad de Ingeniería\par}
+		
+		\vspace{1.2cm}
+		
+		{\large Asignatura:\par}
+		{\textbf{Estructura de Datos y Algoritmos II}\par}
+		
+		\vspace{1.2cm}
+		
+		{\large Proyecto final:\par}
+		{\textbf{Software para la visualización y estudio de algoritmos y estructuras de datos -Backend-}\par}
+		
+		\vspace{1.2cm}
+		
+		{\Huge \textbf{Documentación Técnica del Módulo Core}\par}
+		
+		\vspace{0.5cm}
+		
+		{\Large Análisis, Diseño e Implementación de Endpoints REST en el Backend\par}
+		
+		\vspace{1.2cm}
+		
+		{\large Carpeta documentada:\par}
+		{\texttt{app/core/}\par}
+		
+		\vspace{1cm}
+		
+		{\large Equipo de Desarrollo de Backend\par}
+		\vspace{0.3cm}
+		
+		{\large \today\par}
+		
+	\end{titlepage}
+	
+	% -------------------------------------------------
+	% DOCUMENTACIÓN DEL MÓDULO CORE
+	% -------------------------------------------------
+	
+	\section{Módulo Core}
+	
+	La carpeta \texttt{core} contiene componentes fundamentales para el funcionamiento interno del backend. Su propósito principal es definir la conexión con la base de datos, declarar modelos persistentes y proporcionar funciones básicas para la lectura de archivos.
+	
+	Este módulo no está orientado directamente a la parte visual del sistema, pero sirve como soporte para almacenar información, recuperar datos y mantener registros que posteriormente pueden ser consultados o mostrados desde el front-end.
+	
+	\subsection{Estructura General}
+	
+	La carpeta \texttt{core} contiene los siguientes archivos principales:
+	
+	\begin{verbatim}
+		core/
+		├── database.py
+		├── ingesta.py
+		└── models.py
+	\end{verbatim}
+	
+	El archivo \texttt{\_\_init\_\_.py} no se considera en esta documentación debido a que se encuentra vacío.
+	
+	% -------------------------------------------------
+	\subsection{Archivo \texttt{database.py}}
+	
+	El archivo \texttt{database.py} configura la conexión entre el backend y la base de datos. En este caso, se utiliza SQLite mediante SQLAlchemy.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Elemento} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{DATABASE\_URL} & Define la ubicación de la base de datos SQLite usada por el sistema. & No se muestra directamente, pero permite que la información del sistema pueda persistir. \\
+			\hline
+			\texttt{engine} & Crea el motor de conexión hacia la base de datos. & Permite que el backend consulte o guarde información que después puede visualizarse. \\
+			\hline
+			\texttt{SessionLocal} & Genera sesiones para interactuar con la base de datos. & Soporta operaciones de consulta, registro o actualización desde acciones realizadas en la interfaz. \\
+			\hline
+			\texttt{Base} & Base declarativa para definir modelos de tablas con SQLAlchemy. & Permite estructurar los datos que eventualmente serán presentados al usuario. \\
+			\hline
+			\texttt{get\_db()} & Abre y cierra sesiones de base de datos de forma controlada. & Puede usarse en endpoints que necesiten obtener información para mostrarla en pantalla. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen del archivo database.py}
+	\end{table}
+	
+	En términos generales, este archivo funciona como la configuración central de persistencia. Gracias a él, otros módulos pueden conectarse a la base de datos sin repetir la configuración en cada archivo.
+	
+	% -------------------------------------------------
+	\subsection{Archivo \texttt{models.py}}
+	
+	El archivo \texttt{models.py} define los modelos de datos que serán representados como tablas en la base de datos. Estos modelos permiten guardar información relacionada con conversaciones y ejecuciones de algoritmos.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Modelo} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{ChatHistory} & Representa mensajes de una conversación, incluyendo sesión, contenido, emisor y fecha. & Puede usarse para mostrar historial de chat o actividad previa del usuario. \\
+			\hline
+			\texttt{AlgorithmExecution} & Registra ejecuciones de algoritmos, incluyendo nombre, fecha, estado, parámetros y resultado. & Puede mostrarse como historial de ejecuciones, bitácora o panel de resultados anteriores. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen del archivo models.py}
+	\end{table}
+	
+	El modelo \texttt{ChatHistory} permite almacenar mensajes asociados a una sesión. Esto puede ser útil si el sistema incluye una sección conversacional, asistente o historial de interacción.
+	
+	El modelo \texttt{AlgorithmExecution} permite registrar qué algoritmo se ejecutó, cuándo se ejecutó, con qué parámetros y cuál fue el resultado. Esto puede servir para crear una vista de historial donde el usuario consulte operaciones anteriores.
+	
+	% -------------------------------------------------
+	\subsection{Archivo \texttt{ingesta.py}}
+	
+	El archivo \texttt{ingesta.py} contiene funciones simples para leer información desde archivos externos en diferentes formatos.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Función} & \textbf{Descripción breve} & \textbf{Uso en front-end} \\
+			\hline
+			\texttt{leer\_txt(path)} & Lee un archivo de texto y devuelve sus líneas sin saltos de línea. & Puede permitir que el usuario cargue archivos de texto para analizarlos o mostrarlos. \\
+			\hline
+			\texttt{leer\_csv(path)} & Lee un archivo CSV y devuelve sus filas como listas. & Puede usarse para mostrar datos en tablas dentro de la interfaz. \\
+			\hline
+			\texttt{leer\_json(path)} & Lee un archivo JSON y devuelve su contenido estructurado. & Puede usarse para cargar configuraciones, datos o resultados en formato estructurado. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen del archivo ingesta.py}
+	\end{table}
+	
+	Este archivo puede servir como soporte para futuras funciones de importación de datos. Desde el front-end, el usuario podría subir un archivo y el backend podría leerlo para mostrar su contenido o procesarlo con algún algoritmo.
+	
+	% -------------------------------------------------
+	\section{Resumen General de Uso en Front-End}
+	
+	El módulo \texttt{core} no representa una vista visual por sí mismo, sino que funciona como soporte interno para otras partes del sistema. Sin embargo, sus datos pueden utilizarse para construir secciones visibles dentro del front-end.
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{3.5cm}|p{5cm}|p{5.5cm}|}
+			\hline
+			\textbf{Archivo} & \textbf{Función principal} & \textbf{Vista sugerida en front-end} \\
+			\hline
+			\texttt{database.py} & Configura la conexión con la base de datos. & No requiere vista propia; da soporte a vistas que consultan o guardan información. \\
+			\hline
+			\texttt{models.py} & Define tablas para historial de chat y ejecuciones de algoritmos. & Historial de actividad, historial de ejecuciones o panel de registros. \\
+			\hline
+			\texttt{ingesta.py} & Lee archivos TXT, CSV y JSON. & Vista para cargar archivos y mostrar su contenido procesado. \\
+			\hline
+		\end{tabular}
+		\caption{Resumen visual del módulo core}
+	\end{table}
+	
+	El flujo general sería:
+	
+	\begin{enumerate}
+		\item El usuario realiza una acción desde el front-end.
+		\item El backend procesa la solicitud mediante un endpoint.
+		\item Si es necesario, el backend usa \texttt{core} para consultar, guardar o leer información.
+		\item La información procesada se devuelve al front-end.
+		\item El front-end muestra los datos como historial, tabla, tarjeta o resultado.
+	\end{enumerate}
+	
+	% -------------------------------------------------
+	\section{Conclusión}
+	
+	La carpeta \texttt{core} funciona como una base de soporte para el backend. Aunque no contiene directamente algoritmos visuales ni endpoints principales, sí proporciona elementos esenciales para el funcionamiento del sistema, como la conexión a base de datos, los modelos de almacenamiento y la lectura de archivos.
+	
+	Esta documentación sintetizada permite identificar rápidamente qué contiene cada archivo y cómo puede apoyar a la parte visual del sistema, especialmente en funciones como historial de ejecuciones, almacenamiento de mensajes, consulta de resultados previos y carga de datos desde archivos.
+	
+\end{document}
