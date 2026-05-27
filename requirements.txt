@@ -1,6 +1,6 @@
-# Framework para la API REST
 fastapi==0.110.0
 uvicorn==0.29.0
-
-# Librería para las pruebas automáticas del profesor
+sqlalchemy==2.0.36
+pydantic==2.7.0
+python-multipart==0.0.9
 pytest==8.1.1
