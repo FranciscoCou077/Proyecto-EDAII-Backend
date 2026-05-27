@@ -1,0 +1,338 @@
+% ============================================================
+%  Visualizador Interactivo de Algoritmos — Reporte Final
+%  Universidad Nacional Autónoma de México
+%  Facultad de Ingeniería
+% ============================================================
+\documentclass[12pt, letterpaper]{article}
+
+% --- PAQUETES DE IDIOMA Y FORMATO ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx} 
+\usepackage{hyperref} 
+\usepackage{xcolor}   
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath, amssymb}
+\usepackage{listings}
+\usepackage{lmodern}
+\usepackage{tcolorbox} % Para las cajas de advertencia
+
+% --- COLORES ---
+\definecolor{azulUNAM}{HTML}{003087}
+\definecolor{primary}{RGB}{0, 51, 102}
+\definecolor{warningred}{RGB}{204, 0, 0}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=none,         
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=4
+}
+\lstset{style=mystyle}
+
+% --- HYPERREF ---
+\hypersetup{
+	colorlinks=true,
+	linkcolor=azulUNAM,
+	urlcolor=azulUNAM,
+	pdftitle={Reporte Final - Visualizador Interactivo de Algoritmos},
+	pdfauthor={Equipo de Desarrollo}
+}
+
+% ============================================================
+\begin{document}
+	
+	% --- PORTADA ---
+	\begin{titlepage}
+		\centering
+		\vspace*{0.5cm}
+		
+		\includegraphics[width=2.8cm]{logo_unam.png} 
+		\hfill
+		\includegraphics[width=2.8cm]{logo_fi.png} 
+		\\[1.5cm]
+		
+		{\Huge \textbf{Universidad Nacional Autónoma de México}}\\[0.5cm]
+		{\LARGE \textbf{Facultad de Ingeniería}}\\[1.5cm]
+		
+		{\Large \textbf{Materia:} Estructura de Datos y Algoritmos II}\\[0.5cm]
+		{\Large \textbf{Proyecto:} Visualizador Interactivo de Algoritmos}\\[1.5cm]
+		
+		\rule{\linewidth}{0.5mm} \\[0.5cm]
+		{\LARGE \bfseries Reporte Final de Proyecto }\\[0.4cm]
+		{\Large \textit{Documentación, Arquitectura e Integración}}\\[0.2cm]
+		\rule{\linewidth}{0.5mm} \\[2cm]
+		
+		\begin{flushleft}
+			\Large \textbf{Documentación elaborada por:}\\
+			\vspace{0.3cm}
+			\normalsize
+			Equipo de Desarrollo — Backend\\ 
+			(Francisco José Coutiño Morales y equipo)\\
+		\end{flushleft}
+		
+		\vfill
+		{\large Periodo: 2025 -- 2026}\\[1cm]
+	\end{titlepage}
+	
+	% --- ÍNDICE ---
+	\newpage
+	\tableofcontents
+	\newpage
+	
+	% ============================================================
+	\section{Descripción General del Proyecto}
+	% ============================================================
+	El \textbf{Visualizador Interactivo de Algoritmos} es un sistema web interactivo diseñado como proyecto final de la materia \textit{Estructura de Datos y Algoritmos II}. Su propósito es doble: servir como herramienta de visualización pedagógica para estudiantes de ingeniería y como demostración de arquitectura de software moderna aplicada al ámbito académico.
+	
+	El sistema integra tres componentes desplegados de forma independiente en producción:
+	
+	\begin{itemize}[noitemsep]
+		\item \textbf{Backend API REST} desarrollado en Python con FastAPI, que implementa y expone todos los algoritmos del temario de la materia.
+		\item \textbf{Interfaz Gráfica Web} desarrollada en React + Vite con estética Frutiger Aero, que permite la interacción visual con los algoritmos.
+		\item \textbf{Chatbot RAG (Asistente IA)} basado en LangChain + Groq, que responde preguntas sobre los algoritmos implementados en el proyecto utilizando el código fuente del backend como base de conocimiento.
+	\end{itemize}
+	
+	% ============================================================
+	\section{Arquitectura del Sistema}
+	% ============================================================
+	\begin{quote}
+		\textbf{Repositorio Frontend:} \href{https://github.com/MarFerNAndaUwU/Interfaz-gr-fica-EDA2-SUPER}{Interfaz-gr-fica-EDA2-SUPER} \\
+		\textbf{Repositorio Backend:} \href{https://github.com/FranciscoCou077/Proyecto-EDAII-Backend}{Proyecto-EDAII-Backend}
+	\end{quote}
+	
+	\begin{verbatim}
+		+---------------------------------------------+
+		|         Frontend (React + Vite)             |
+		|   https://interfaz-gr-fica-eda2-super       |
+		|              .onrender.com                  |
+		+------------+------------------+-------------+
+		             |                  |
+		             v                  v
+		+--------------------+  +----------------------+
+		|   Backend API      |  |   Chatbot RAG        |
+		|   FastAPI + Python |  |   LangChain + Groq   |
+		|   /api/sorting/    |  |   llama-3.1-8b       |
+		|   /api/graphs/     |  |   POST /preguntar    |
+		|   /api/searching/  |  |                      |
+		+--------------------+  +----------------------+
+	\end{verbatim}
+	
+	Los tres servicios se despliegan de forma gratuita en \textbf{Render.com}. El Frontend se sirve como \textbf{Static Site}, el Backend y el Chatbot como \textbf{Web Services}.
+	
+	% ============================================================
+	\section{Módulos Implementados}
+	% ============================================================
+	\subsection{Backend — Algoritmos}
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{@{}lp{10cm}@{}}
+			\toprule
+			\textbf{Módulo} & \textbf{Algoritmos} \\
+			\midrule
+			\textbf{Ordenamiento} & Bubble Sort, Heap Sort, Quick Sort, Counting Sort, Radix Sort, Merge Sort \\
+			\textbf{Búsqueda} & Lineal, Binaria, Hash con encadenamiento \\
+			\textbf{Grafos} & Representación (Matriz/Lista), BFS, DFS \\
+			\textbf{Árboles} & Árbol Binario, Inorden/Preorden/Postorden, Notaciones \\
+			\textbf{Paralelos} & Reducción paralela, Multiplicación de matrices \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Chatbot RAG}
+	El chatbot utiliza la técnica de \textbf{Retrieval-Augmented Generation (RAG)}:
+	\begin{enumerate}
+		\item Al recibir una pregunta, clona la rama \texttt{dev} del repositorio backend.
+		\item Carga los archivos \texttt{.py} de la carpeta \texttt{app/algoritmos/} con \texttt{DirectoryLoader}.
+		\item Realiza búsqueda por palabras clave con normalización (camelCase, traducciones español $\to$ inglés, variaciones con guion bajo).
+		\item Pasa los fragmentos relevantes como contexto al LLM (Groq \texttt{llama-3.1-8b-instant}).
+		\item Retorna la respuesta al frontend vía \texttt{POST /preguntar}.
+	\end{enumerate}
+	
+	\subsection{Frontend}
+	Interfaz de una sola página (SPA) con:
+	\begin{itemize}[noitemsep]
+		\item Navegación por secciones: Inicio, Algoritmos, Documentación, Nosotros, Asistente.
+		\item Índice Temático Interactivo con Scrollspy de Bootstrap.
+		\item Visor de PDF embebido con navegación por temas.
+		\item Ventana de chat flotante conectada al chatbot en tiempo real.
+		\item Estética Frutiger Aero con animaciones y música de fondo.
+	\end{itemize}
+	
+	% ============================================================
+	\section{Proceso de Desarrollo e Integración Backend–Chatbot}
+	% ============================================================
+	El desarrollo del chatbot implicó una colaboración directa entre los equipos de Backend y Chatbot para lograr la integración funcional del sistema RAG. A continuación se documenta el proceso de cambios técnicos realizados:
+	
+	\subsection{Migración de LLM: Google Gemini $\to$ Groq}
+	El LLM original (\texttt{ChatGoogleGenerativeAI} con \texttt{gemini-1.5-flash}) fue reemplazado por \texttt{ChatGroq} con \texttt{llama-3.1-8b-instant} debido a restricciones de red en Render (plan gratuito) que bloqueaban las conexiones salientes hacia las APIs de Google. El modelo \texttt{llama3-8b-8192} fue descontinuado por Groq durante el desarrollo, migrándose a \texttt{llama-3.1-8b-instant}.\\
+	\textbf{Archivo modificado:} \texttt{chatbot\_logic/chain.py}
+	
+	\subsection{Migración de Loader: GenericLoader $\to$ DirectoryLoader}
+	\texttt{GenericLoader.from\_path} no está disponible en la versión de \texttt{langchain-community} desplegada. Se reemplazó por \texttt{DirectoryLoader} con \texttt{PythonLoader}, que carga directamente todos los archivos \texttt{.py} de forma recursiva sin dependencias de parsers adicionales.\\
+	\textbf{Archivo modificado:} \texttt{chatbot\_logic/loader.py}
+	
+	\subsection{Eliminación de ChromaDB como vector store}
+	La dependencia de ChromaDB requería credenciales para los embeddings que no estaban disponibles en el entorno de Render. Se reemplazó el sistema de recuperación vectorial por una \textbf{búsqueda directa por palabras clave} sobre los documentos cargados en memoria, con caché de sesión para evitar clonar el repositorio en cada petición.\\
+	\textbf{Archivo modificado:} \texttt{chatbot\_logic/retriever.py}
+	
+	\subsection{Mejoras al sistema de búsqueda}
+	\begin{itemize}[noitemsep]
+		\item \textbf{Normalización de camelCase}: \texttt{MergeSort} $\to$ \texttt{merge\_sort} mediante expresiones regulares.
+		\item \textbf{Diccionario de traducciones español $\to$ inglés}: permite consultas en español que encuentren código en inglés.
+		\item \textbf{Búsqueda en metadata de archivos}: además del contenido, se busca en el nombre del archivo fuente (\texttt{source}).
+		\item \textbf{Variaciones de separadores}: genera variantes con espacio, guion bajo y sin separador.
+	\end{itemize}
+	
+	\subsection{Actualización de dependencias}
+	\begin{lstlisting}[language=bash]
+		langchain-google-genai  ->  langchain-groq==0.2.0
+		llama3-8b-8192          ->  llama-3.1-8b-instant
+		GenericLoader           ->  DirectoryLoader + PythonLoader
+		ChromaDB (vectores)     ->  Busqueda por palabras clave en memoria
+	\end{lstlisting}
+	
+	% ============================================================
+	\section{Advertencias Críticas y Prevención de Fallos}
+	% ============================================================
+	
+	\begin{tcolorbox}[colback=lightgray, colframe=primary, title=\textbf{5.1 Advertencias Lógicas (Degradación de servicio)}]
+		Estas condiciones no interrumpen el sistema pero pueden afectar la calidad de las respuestas o el rendimiento de la plataforma:
+		\begin{itemize}
+			\item \textbf{Respuesta incompleta del Chatbot:} El bot responde "no tengo información" sobre un algoritmo existente. \textit{Causa:} La consulta usa términos no cubiertos por el diccionario de traducciones o el retriever no encontró coincidencias.
+			\item \textbf{Latencia alta en el primer arranque:} La primera respuesta del chatbot tarda 60–90 segundos. \textit{Causa:} El servicio de Render (plan gratuito) se duerme tras 15 minutos de inactividad; el tiempo de arranque frío incluye clonar el repositorio de GitHub completo.
+			\item \textbf{Alucinación parcial de código:} El chatbot genera código que no coincide exactamente con el del proyecto. \textit{Causa:} El LLM complementa con conocimiento general cuando el contexto RAG recuperado es insuficiente.
+			\item \textbf{Navegación incorrecta en visor PDF:} El visor no muestra la página correcta al cambiar de tema. \textit{Causa:} Algunos navegadores no respetan el parámetro \texttt{\#page=N} en iframes por políticas de seguridad.
+			\item \textbf{Timeout ocasional (\texttt{HTTP 503}):} El backend responde con un error 503. \textit{Causa:} Render reinicia instancias gratuitas periódicamente; el primer request tras el reinicio activa el arranque frío.
+		\end{itemize}
+	\end{tcolorbox}
+	
+	\begin{tcolorbox}[colback=lightgray, colframe=warningred, title=\textbf{5.2 Errores Fatales (Fin abrupto del sistema)}]
+		Estas condiciones causan la caída total del servicio afectado y requieren intervención técnica inmediata:
+		\begin{itemize}
+			\item \textbf{\texttt{GROQ\_API\_KEY} no configurada o expirada:} \textit{Afecta a: Chatbot.} La variable de entorno fue eliminada o la key fue revocada. \textbf{Solución:} Generar nueva key en \texttt{console.groq.com} y actualizar en el dashboard de Render.
+			\item \textbf{Repositorio backend o rama \texttt{dev} eliminada:} \textit{Afecta a: Chatbot.} El loader clona \texttt{dev} al iniciar; si no existe, falla la inicialización del RAG. \textbf{Solución:} Restaurar la rama \texttt{dev} en el repositorio original.
+			\item \textbf{\texttt{ImportError} en \texttt{chatbot\_logic/}:} \textit{Afecta a: Chatbot.} Actualización incompatible de una dependencia de LangChain durante el redespliegue. \textbf{Solución:} Fijar versiones exactas en el \texttt{requirements.txt}.
+			\item \textbf{Build de Vite falla por error de sintaxis JSX:} \textit{Afecta a: Frontend.} Caracteres especiales con codificación incorrecta al editar \texttt{App.jsx}. \textbf{Solución:} Verificar que el archivo se guarde en UTF-8 puro.
+			\item \textbf{Puerto no detectado por Render:} \textit{Afecta a: Backend/Chatbot.} El \texttt{Procfile} no expone correctamente \texttt{\$PORT}. \textbf{Solución:} Verificar \texttt{uvicorn app.main:app --host 0.0.0.0 --port \$PORT} en el Procfile.
+			\item \textbf{Conflicto de merge no resuelto en \texttt{App.jsx}:} \textit{Afecta a: Frontend.} Push simultáneo de múltiples desarrolladores. \textbf{Solución:} Establecer flujo de trabajo con \textit{feature branches} y \textit{pull requests}.
+		\end{itemize}
+	\end{tcolorbox}
+	
+	% ============================================================
+	\section{URLs de Producción}
+	% ============================================================
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{@{}ll@{}}
+			\toprule
+			\textbf{Servicio} & \textbf{URL} \\
+			\midrule
+			Frontend & \url{https://interfaz-gr-fica-eda2-super.onrender.com} \\
+			Backend API (docs) & \url{https://proyecto-edaii-backend.onrender.com/docs} \\
+			Chatbot & \url{https://repo-chatbot-ia.onrender.com} \\
+			Documentación Vol. I (PDF) & \texttt{/docs/EDA2\_Vol1\_Codigo.pdf} \\
+			Documentación Vol. II (PDF) & \texttt{/docs/EDA2\_Vol2\_Marco\_Teorico\_1.pdf} \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\newpage
+	% ============================================================
+	\section{Créditos del Proyecto}
+	% ============================================================
+	\subsection{Equipo de Backend}
+	\textbf{Lead:} Francisco José Coutiño Morales
+	\begin{itemize}[noitemsep]
+		\item Francisco José Coutiño Morales (Lead Backend Developer)
+		\item Ernesto Flamenco Villaseñor (Backend Developer)
+		\item Tlalli Ortega González (Backend Developer)
+		\item Sergio Alonso Salcedo Sainz (Backend Developer)
+		\item Orlando Ocampo Lagunas (Backend Developer)
+		\item Aarón Salazar Castillo (Backend Developer)
+		\item Erick Cruz Solís (Backend Developer)
+		\item Augusto Gandarilla Ibarra (Backend Developer)
+		\item Neri Israel Cruz Cárdenas (Backend Developer)
+	\end{itemize}
+	
+	\subsection{Equipo de Frontend}
+	\textbf{Lead:} González Baca María Fernanda
+	\begin{itemize}[noitemsep]
+		\item González Baca María Fernanda
+		\item Soriano Nievas Andrés
+		\item Casanova Cortina América Daniela
+		\item Toledo Reyes Vania
+		\item Carlos Didier Cecilio Alejandro
+	\end{itemize}
+	
+	\subsection{Equipo de Chatbot IA}
+	\textbf{Lead:} Jim Nava Bryan
+	\begin{itemize}[noitemsep]
+		\item Jim Nava Bryan
+		\item Martínez Mondragón Benjamín
+		\item Arroyo Castañón Dulce Carolina
+		\item Perea Yáñez Oscar
+		\item Hernández Camargo Josué
+		\item Galindo Contreras Ángel Gabriel
+		\item Marín Pérez Daniela
+		\item Escobedo Reyes Emma Esmeralda
+		\item Martínez García Nour
+		\item Jiménez Vega José Enrique
+		\item Orozco González Samuel Alejandro
+		\item Zambrano Mota María Fernanda
+	\end{itemize}
+	\newpage
+	% ============================================================
+	\section{Tecnologías Utilizadas}
+	% ============================================================
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{@{}ll@{}}
+			\toprule
+			\textbf{Categoría} & \textbf{Tecnología} \\
+			\midrule
+			\textbf{Backend} & Python 3.12, FastAPI, Uvicorn, SQLite \\
+			\textbf{Frontend} & React 19, Vite 8, Bootstrap 5 \\
+			\textbf{Chatbot} & LangChain 0.3, Groq (llama-3.1-8b-instant), GitPython \\
+			\textbf{Despliegue} & Render.com (Static Site + Web Services) \\
+			\textbf{Control de versiones} & Git, GitHub \\
+			\textbf{Documentación} & ReportLab, LaTeX \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	% ============================================================
+	\section{Observaciones Finales}
+	% ============================================================
+	El proyecto \textbf{Visualizador Interactivo de Algoritmos} cumple con todos los requisitos establecidos en el temario de \textit{Estructura de Datos y Algoritmos II}: colecciones, paquetes, modificadores de acceso, herencia, polimorfismo, clases abstractas, interfaces, excepciones, E/S de archivos, GUI y concurrencia (crédito extra). La integración de un sistema RAG como chatbot añade un componente de inteligencia artificial aplicada que enriquece el valor didáctico y técnico del proyecto.
+	
+	El proceso de desarrollo estuvo marcado por la colaboración interdisciplinaria entre tres equipos, la resolución iterativa de problemas de compatibilidad en entornos de producción y la toma de decisiones técnicas orientadas a la estabilidad del sistema dentro de las restricciones del plan gratuito de Render.
+	
+	\vspace{1cm}
+	\begin{center}
+		\color{gray}\small
+		Documentación elaborada por el Equipo de Backend — Visualizador Interactivo de Algoritmos\\
+		Estructura de Datos y Algoritmos II $\mid$ Facultad de Ingeniería, UNAM $\mid$ 2026--2
+	\end{center}
+	
+\end{document}
